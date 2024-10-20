@@ -1,0 +1,620 @@
+\documentclass[nojss]{jss}
+
+\usepackage{dsfont}
+\usepackage{bbm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{bbold}
+\usepackage{amsmath}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% declarations for jss.cls %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareMathOperator{\diag}{diag}
+
+
+%% just as usual
+\author{Robin K. S. Hankin}
+\title{A generalization of the Dirichlet distribution}
+%\VignetteIndexEntry{A vignette for the wd package}
+%% for pretty printing and a nice hypersummary also set:
+%% \Plainauthor{Achim Zeileis, Second Author} %% comma-separated
+\Plaintitle{A generalization of the Dirichlet distribution}
+\Shorttitle{A generalization of the Dirichlet distribution}
+
+%% an abstract and keywords
+\Abstract{
+
+yes.
+}
+
+\Keywords{Elliptic functions, modular functions, Weierstrass elliptic
+functions, visualization of complex functions}
+
+
+
+
+\Address{
+  Robin K. S. Hankin\\
+  Auckland University of Technology\\
+  19 Wakefield Street\\
+  Auckland\\
+  New Zealand\\
+  E-mail: \email{hankin.robin@gmail.com}
+}
+
+
+
+\newcommand{\ztn}{\ensuremath{0\leqslant i\leqslant n}}
+\newcommand{\otn}{\ensuremath{1\leqslant i\leqslant n}}
+
+\newcommand{\sztn}{\sum_{i=0}^{n}}
+\newcommand{\sotn}{\sum_{i=1}^{n}}
+
+\newcommand{\ba}{\boldsymbol\alpha}
+\newcommand{\bw}{\mathbf{w}}
+\newcommand{\bc}{\mathbf{c}}
+\newcommand{\qbar}{\overline{q}}
+
+%% need no \usepackage{Sweave.sty}
+
+\begin{document}
+
+
+
+
+
+\section{Introduction}
+
+Start with $p_1,\ldots,p_n$ with $p_i>0$ for \otn\ and {\em define}
+$p_0=1-\left(p_1+\cdots+p_n\right)$ so that $\sztn p_i=1$.
+
+\begin{equation}\label{defq}
+q_i = \frac{w_ip_i}{\sum_{i=0}^n w_ip_i},\qquad\ztn
+\end{equation}
+
+Observe that~$\sztn q_i=1$.  Inverse:
+
+\begin{equation}\label{defp}
+  p_i= \frac{q_i/w_i}{\sum_{i=0}^n p_i/w_i},\qquad\ztn
+\end{equation}
+
+Some notation:
+
+\begin{align}
+  \mathfrak{p} &=& \sztn w_ip_i\\
+  &=& w_0p_0 + \sotn w_ip_i\\
+  &=& w_0\left(1-\sotn p_i\right) + \sotn w_ip_i\\
+  &=& w_0 +\sotn p_i(w_i-w_0)\label{pbardef}
+\end{align}
+
+Similarly:
+\begin{align}
+{\mathfrak q} &=& \sztn q_i/w_i\\
+  &=& q_0/w_0 + \sotn q_i/w_i\\
+  &=& w_0^{-1}(1-\sotn q_i) + \sotn q_i/w_i\\
+  &=& w_0 +\sotn q_i\left(w_i^{-1}-w_0^{-1}\right)
+\end{align}
+  
+For the Jacobian, need to recast equation~\ref{defq} so that it does
+not have a $p_0$:
+
+\begin{align}
+q_i &=& \frac{w_ip_i}{w_0p_0+\sotn w_ip_i},\qquad\otn\\
+    &=& \frac{w_ip_i}{w_0\left(1-(p_1+\cdots+p_n)\right)+\sotn w_ip_i}\\
+    &=& \frac{w_ip_i}{w_0 + \sotn p_i(w_0-w_i)}\\
+    &=& \frac{w_ip_i}{\mathfrak{p}{\mathfrak p}}\label{asdf}\qquad\mbox{from equation~\ref{pbardef}}
+\end{align}
+
+
+Then
+\begin{align}
+  q_0 &=& 1-\sotn q_i \\ 
+      &=& 1-\frac{\sotn{w_ip_i}}{w_0 + \sotn p_i(w_0-w_i)}\\
+      &=& \frac{w_0 -\sotn{w_0p_i}}{w_0 + \sotn p_i(w_0-w_i)}\\
+      &=& \frac{w_0(1-\sotn{p_i})}{w_0 + \sotn p_i(w_0-w_i)}\\
+      &=& \frac{w_0P_0}{w_0 + \sotn p_i(w_0-w_i)}\\
+      &=& \frac{w_0p_0}{w_0p_0 + \sotn w_ip_i}\\
+      &=& \frac{w_0p_0}{\sztn w_ip_i}
+\end{align}
+
+Similarly
+\begin{equation}
+  p_0=\frac{q_0/w_0}{\sztn p_i/w_i}
+  \end{equation}
+
+Note that 
+\begin{equation}
+  \mathfrak{p} =  \sum_{i=0}^{n}w_ip_i
+  =\sum_{i=0}^{n}\left(w_i\frac{q_i/w_i}{\sum_{i=0}^nq_i/w_i}\right)
+  =\sum_{i=0}^{n}\left(\frac{q_i}{\sum_{i=0}^nq_i/w_i}\right)
+  =\frac{1}{\sum_{i=0}^nq_i/w_i}\sum_{i=0}^{n}q_i
+  =\frac{1}{\sum_{i=0}^nq_i/w_i}
+  =\frac{1}{\mathfrak q}
+  \end{equation}
+
+so~${\mathfrak p}{\mathfrak q}=1$. Now we seek the Jacobian
+
+\begin{equation}
+  J =
+  \frac{
+    \partial\left(q_1,\ldots,q_n\right)
+  }{
+    \partial\left(p_1,\ldots,p_n\right)
+  }
+\end{equation}
+
+Note the absence of zero because the PDF is on $p_1,\ldots, p_n$ and
+we define $p_0=1-\left(p_1+\cdots+p_n\right)$.  Use equation~\ref{pbardef}.
+
+
+
+\begin{equation}
+\frac{\partial q_i}{\partial p_j} =
+\frac{\partial}{\partial p_j} \frac{w_ip_i}{w_0+\sotn p_i(w_1-w_0)}=
+\begin{cases}  \frac{-w_ip_i\cdot w_j + 
+  \mathfrak{p} w_i
+  }{\displaystyle\left(\mathfrak{p}\right)^2}
+  &\mbox{if } i=j \\
+\frac{-w_ip_i\cdot w_j}{\displaystyle\left(\mathfrak{p}\right)^2}
+  & \mbox{if } i\neq j\end{cases}
+\end{equation}
+
+You can write this as 
+
+\begin{equation}
+  J = A +  \mathbf{u}\mathbf{v}^T
+\end{equation}
+  
+where
+$A=\diag\left(\frac{w_1}{\mathfrak{p}},\ldots,\frac{w_n}{\mathfrak{p}}\right)$
+and
+$\mathbf{u}=-\left(\frac{w_1p_1}{\mathfrak{p}},\ldots,\frac{w_np_n}{\mathfrak{p}}\right)^T$
+and~$\mathbf{v}=\left(\frac{w_1}{\mathfrak{p}},\ldots,\frac{w_n}{\mathfrak{p}}\right)^T$
+[both column vectors].  Now use the matrix determinant lemma, viz
+\begin{equation}
+  \det\left(A+\mathbf{u}\mathbf{v}^T\right)
+  = \left(1+\mathbf{v}^TA^{-1}\mathbf{u}\right)\det(A)
+\end{equation}
+
+Now $A^{-1} =
+\diag\left(\frac{\mathfrak{p}}{w_1},\ldots,\frac{\mathfrak{p}}{w_n}\right)$
+and~$\det(A)=\frac{w_1\times\cdots\times w_n}{\mathfrak{p}^n}$ so
+
+\begin{alignat}{2}
+&  \det(J) &&=   \frac{w_1\cdots w_n}{\mathfrak{p}^n}\times\left(1-\frac{w_1p_1+\ldots+w_np_n}{\mathfrak{p}}\right)\\
+&          &&=   \frac{w_0\cdots w_n}{\mathfrak{p}^{n+1}}\\
+&          &&=   w_0\cdots w_n\cdot\mathfrak{q}^{n+1}
+\end{alignat}
+
+OK so now we can transform the Dirichlet distribution:
+
+
+  \begin{alignat}{2}
+& f_P(p_1,\ldots,p_n) &&=\frac{\Gamma(\sum_{i=0}^n\alpha_i)}{\prod_{i=0}^n\Gamma(\alpha_i)}\cdot\prod_{i=0}^np_i^{\alpha_i-1}\\
+& f_Q(q_1,\ldots,q_n) &&= \frac{\Gamma(\sum_{i=0}^n\alpha_i)}{\prod_{i=0}^n\Gamma(\alpha_i)}\cdot \prod_{i=0}^n\left(\frac{q_i/w_i}{\sum_{i=0}^nq_i/w_i}\right)^{\alpha_i-1}\cdot\frac{w_0\cdots w_n}{\mathfrak{p}^{n+1}}\\
+                   &  &&= \frac{\Gamma(\sum_{i=0}^n\alpha_i)}{\prod_{i=0}^nw_i^{\alpha_i}\Gamma(\alpha_i)}\cdot \frac{\prod_{i=0}^nq_i^{\alpha_i-1}}{\mathfrak{q}^{\sum_{i=0}^n\alpha_i}}\\
+                   &  &&= \frac{\Gamma(\alpha)}{\prod w_i^{\alpha_i}\Gamma(\alpha_i)}\cdot\frac{\prod q_i^{\alpha_i-1}}{\mathfrak{q}^{\alpha}}
+\end{alignat}
+
+where $\alpha=\sum_{i=0}^n\alpha_i$.  I will use {\bf bold} upper-case
+letters for matrices, as in~$\mathbf{Q}$ or~$\mathbf{P}$.
+
+\begin{equation}
+  \mathbf{Q}=
+  \begin{pmatrix}
+    q_0^{(1)} & q_1^{(1)} & \cdots & q_n^{(1)} \\
+    q_0^{(2)} & q_1^{(2)} & \cdots & q_n^{(2)\vphantom{h^{h^h}}} \\
+    \vdots  & \vdots  & \ddots & \vdots  \\
+    q_0^{(r)} & q_1^{(r)} & \cdots & q_n^{(r)} \\
+  \end{pmatrix}
+\end{equation}
+
+I will assume gazillions of observations so that $\mathbf{Q}$ has more
+rows than columns.  \rule{6mm}{10mm}
+
+
+So the observations are $\mathbf{Q}$, arranged into an $r$-by-$n+1$
+matrix.  Each row is an observation and the rows are independent.  The
+rowsums are equal to one.
+
+
+\begin{equation}
+  f_Q(\mathbf{Q})=
+\left(
+\frac{\Gamma(\alpha)}{\prod w_i^{\alpha_i}\Gamma(\alpha_i)}
+\right)^r\cdot
+\frac{\prod Q_i^{\alpha_i-1}}{\mathfrak{Q}^{\alpha}}
+\end{equation}
+
+where~$Q_i=\prod_{j=1}^r q_i^{(j)}$ (ie the sufficient statistics for
+the Dirichlet), $\mathfrak{Q} =
+\overline{Q}=\prod_{j=1}^r\mathfrak{q}^{(j)}$ is the product of the
+(unobservable)~$\mathfrak{q}$'s.  I want the notation to be ordinary
+upper-case letters for products over iid observations~$1,\ldots,r$.
+
+{\bf We do not have analogous expressions for the (unobservable)
+  $p$'s}: We define $P_i=\sum_{j=1}^r p_i^{(j)}$.
+
+We define $\overline{p_i} = \frac{1}{r}\sum_{j=1}^r p_i^{(j)}$.
+
+Now take logs for a single observation:
+
+\begin{equation}
+ \log f_Q(q_1,\ldots,q_n)=
+  \log\Gamma(\alpha) - \sum\log\Gamma(\alpha_i) - \sum\alpha_i\log w_i
+  +\sum(\alpha_i-1)\log q_i -\alpha\log\mathfrak{q}
+  \end{equation}
+
+where sums are over~$i=0,1,\ldots,n$.  Then we consider the joint PDF
+over observations~$1,\ldots,r$:
+
+\begin{equation}
+  \log f_Q(\mathbf{Q}) = 
+  r\log\Gamma(\alpha) - r\sum\log\Gamma(\alpha_i) - r\sum\alpha_i\log w_i
+  +\sum(\alpha_i-1)\log Q_i -\alpha\log\mathfrak{Q}\label{deflogF}
+\end{equation}
+
+and we are going to work out second derivatives of~$-\log
+f_Q(\mathbf{Q}) = -\log f$ and hope that the resulting matrix is
+positive-definite (which it should be if $r$ is sufficiently large).
+
+First differentiate the log likelihood (equation~\ref{deflogF}) WRT
+$\alpha_i$:
+
+\begin{alignat}{2}
+& -\frac{\partial}{\partial \alpha_i}\log f_Q(\mathbf{Q}) &&=
+-r\psi(\alpha)+r\psi(\alpha_i)+r\log w_i-\log Q_i +\log\mathfrak{Q}
+\end{alignat}
+
+(note the sign change).
+
+Now to find the second derivatives:
+\begin{equation}
+ -\frac{\partial^2}{\partial \alpha_i\partial\alpha_j}\log f_Q(\mathbf{Q}) =
+ \begin{cases}
+-r\psi_1(\alpha)+r\psi_1(\alpha_i)
+  &\mbox{if } i=j \\
+-r\psi_1(\alpha)&\mbox{if } i\neq j
+\end{cases}
+\end{equation}
+
+This matches the regular Dirichlet information matrix (which is a
+constant, so the Fisher information is equal to the observed
+information).  So this part of the matrix (which we want to be
+positive definite) is
+\begin{equation}
+r\diag\left(\psi_1(\alpha_0)^{\vphantom h},\ldots,r\psi_n(\alpha_1)\right)
+-\mathbf{J}_{n+1,n+1}\cdot r\psi_1(\alpha)\label{AA}
+\end{equation}
+where $\mathbf{J}$ denotes the matrix with all entries equal to one.
+
+OK now we want the mixed derivatives (that is, WRT $w$ and $\alpha$):
+\begin{alignat}{2}
+& -\frac{\partial^2}{\partial w_j\partial\alpha_i}\log f_Q(\mathbf{Q}) &&=
+\frac{\partial}{\partial w_j}\left(-r\psi(\alpha)+r\psi(\alpha_i)+r\log w_i-\log Q_i +\log\mathfrak{Q}\right)  \\
+& &&=\frac{\partial}{\partial w_j}\left(r\log w_i+\log\mathfrak{Q}\right) \\
+& && =\delta_{ij}\frac{r}{w_i} + \frac{\partial}{\partial w_j}\left(\log\mathfrak{q}^{(1)}+\cdots+\log\mathfrak{q}^{(r)}\right)\\
+& && =\delta_{ij}\frac{r}{w_i} + \frac{1}{\mathfrak{q}^{(1)}}\cdot\frac{-q_j^{(1)}}{w_j^2}
++\cdots+\frac{1}{\mathfrak{q}^{(r)}}\cdot\frac{-q_j^{(r)}}{w_j^2}\\
+& && =\delta_{ij}\frac{r}{w_i} -\left( \frac{p_j^{(1)}}{w_j}+\cdots+\frac{p_j^{(r)}}{w_j}\right)\\
+& && =\delta_{ij}\frac{r}{w_j} -\left( \frac{p_j^{(1)}}{w_j}+\cdots+\frac{p_j^{(r)}}{w_j}\right)\\
+& && = \frac{r\delta_{ij}-P_j}{w_j}\label{di2_f_di_w_di_alpha}\\
+& && = r\frac{\delta_{ij}-\overline{p_j}}{w_j} \label{di2_f_di_w_di_alpha2}\\
+\end{alignat}
+where $P_j=p_j^{(1)} +\cdots+p_j^{(r)}$.  {\bf NB}
+This is {\em not} constant.
+
+Note that equation~\ref{di2_f_di_w_di_alpha} does not have any
+$\alpha_i$ anywhere in it.  So each row of the resulting matrix is
+constant.  We can write equation~\ref{di2_f_di_w_di_alpha} more compactly
+using~$\mathcal{W} = \diag\left(w_0,\ldots,w_n\right)$.
+
+\begin{equation}
+-\frac{\partial^2}{\partial w_j\partial\alpha_i}\log f=
+r\mathcal{W}^{-1} - \mathcal{W}^{-1}\mathbf{P}^T\mathbf{J}_{r,n+1}
+\label{AW}
+\end{equation}
+
+Now differentiate WRT $w_i$ first:
+
+\begin{alignat}{2}
+& -\frac{\partial}{\partial w_i}\log f_Q(\mathbf{Q}) &&=
+r\frac{\alpha_i}{w_i} +\alpha\frac{\partial\log\mathfrak{Q}}{\partial w_i}\\
+& &&= r\frac{\alpha_i}{w_i} +\alpha\frac{\partial}{\partial w_i}\left[ \log\mathfrak{q}^{(1)} + \cdots+\log\mathfrak{q}^{(r)} \right]\\
+& &&= r\frac{\alpha_i}{w_i}  + \alpha\left[
+  \frac{1}{\mathfrak{q}^{(1)}}\frac{-q_i^{(1)}}{w_i^2}
+  +\cdots+
+  \frac{1}{\mathfrak{q}^{(r)}}\frac{-q_i^{(r)}}{w_i^2}
+  \right]\\
+& &&= \frac{r\alpha_i}{w_i} - \frac{\alpha}{w_i^2}\left[
+  \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+      \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]\label{justq}\\
+& &&= \frac{r\alpha_i}{w_i} - \frac{\alpha}{w_i^2}\left[
+  w_ip_i^{(1)} +\cdots+  w_ip_i^{(r)}\right]
+\qquad\mbox{because~$\mathfrak{p}=1/\mathfrak{q}$}\\
+& &&= \frac{r\alpha_i}{w_i} - \frac{\alpha}{w_i}
+  \left[ p_i^{(1)} +\cdots+ p_i^{(r)}\right]\\
+& &&= \frac{r\alpha_i}{w_i} - \frac{\alpha P_i}{w_i}\label{di_f_di_w}\\
+& &&= \frac{r}{w_i}(\alpha_i-\alpha\overline{p_i})\label{di_f_di_w2}
+\end{alignat}
+
+
+Now the second derivative.  Note that we can't use
+equation~\ref{di_f_di_w} directly because it includes
+unobservable~$p_i$'s.  So we have to use equation~\ref{justq}.  First
+do the diagonal terms, viz
+
+\begin{alignat}{2}
+& -\frac{\partial^2\log f}{\partial w_i^2}&&= -\frac{\partial^2\log f_Q(\mathbf{Q}) }{\partial w_i^2}\\
+  & && =
+  \frac{\partial}{\partial w_i}
+  \left(
+  \frac{r\alpha_i}{w_i} - \frac{\alpha}{w_i^2}\left[
+  \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+      \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]
+  \right)  \\
+  &  &&=-\frac{r\alpha_i}{w_i^2} 
+  -\frac{-2\alpha}{w_i^3}\left[
+  \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+    \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]
+  -\frac{\alpha}{w_i^2}
+  \left[ 
+    \frac{q_i^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^2}\cdot\frac{-q_i^{(1)}}{w_i^2}
+    +\cdots+ 
+    \frac{q_i^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^2}\cdot\frac{-q_i^{(r)}}{w_i^2}
+    \right]\\
+    &  &&=-\frac{r\alpha_i}{w_i^2}   +\frac{2\alpha}{w_i^3}\left[
+  \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+    \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]
+  +\frac{\alpha}{w_i^2}
+  \left[ 
+    \frac{q_i^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^2}\cdot\frac{q_i^{(1)}}{w_i^2}
+    +\cdots+ 
+    \frac{q_i^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^2}\cdot\frac{q_i^{(r)}}{w_i^2}
+    \right]\\
+      &  &&= -\frac{r\alpha_i}{w_i^2}   +\frac{2\alpha}{w_i^3}\left[
+  p_i^{(1)} w_i +\cdots+ p_i^{(r)}w_i\right]
+  +\frac{\alpha}{w_i^2}
+  \left[ 
+    \frac{q_i^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^2}\cdot\frac{q_i^{(1)}}{w_i^2}
+    +\cdots+ 
+    \frac{q_i^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^2}\cdot\frac{q_i^{(r)}}{w_i^2}
+    \right]\\
+      &  &&= -\frac{r\alpha_i}{w_i^2}   +\frac{2\alpha}{w_i^2}\left[
+  p_i^{(1)} +\cdots+ p_i^{(r)}\right]
+  +\frac{\alpha}{w_i^2}
+  \left[ 
+    \left(p_i^{(1)}\right)^2
+    +\cdots+ 
+    \left(p_i^{(r)}\right)^2
+    \right]\\
+        & && = -\frac{r\alpha_i}{w_i^2}  +\frac{2r\alpha\overline{p_i}}{w_i^2}  +\frac{r\alpha\overline{p_i^2}}{w_i^2}\\
+        & && = rw_i^{-2}\left(-\alpha_i+2\alpha\overline{p_i} +\alpha\overline{p_i^2}\right)\\
+\end{alignat}
+
+
+where~$P_{ij}=p_i^{(1)}p_j^{(1)}+\cdots+p_i^{(r)}p_j^{(r)}$.
+
+Now do the off-diagonal elements of the ws, viz
+
+\begin{alignat}{2}
+& -\frac{\partial^2\log f}{\partial w_j\partial w_i}&&=
+  \frac{\partial}{\partial w_j}\left[
+    \frac{r\alpha_i}{w_i} - \frac{\alpha}{w_i^2}\left[
+  \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+      \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]\right]\qquad i\neq j  \\
+  & &&=-\frac{\alpha}{w_i^2}\frac{\partial}{\partial w_j}\left[
+      \frac{q_i^{(1)}}{\mathfrak{q}^{(1)}}
+    +\cdots+
+      \frac{q_i^{(r)}}{\mathfrak{q}^{(r)}}\right]\\
+  & &&=-\frac{\alpha}{w_i^2}\left[
+          \frac{q_i^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^{2}}\cdot\frac{-q_j^{(1)}}{w_j^2}
+          +\cdots+
+          \frac{q_i^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^{2}}\cdot\frac{-q_j^{(r)}}{w_j^2}
+          \right]\\
+    & &&=\frac{\alpha}{w_i^2}\left[
+          \frac{q_i^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^{2}}\cdot\frac{q_j^{(1)}}{w_j^2}
+          +\cdots+
+          \frac{q_i^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^{2}}\cdot\frac{q_j^{(r)}}{w_j^2}
+          \right]\\
+      & &&= \frac{\alpha}{w_i^2w_j^2}\left[
+          \frac{q_i^{(1)}q_j^{(1)}}{\left(\mathfrak{q}^{(1)}\right)^{2}}
+          +\cdots+
+          \frac{q_i^{(r)}q_j^{(r)}}{\left(\mathfrak{q}^{(r)}\right)^{2}}
+          \right]\\
+  & &&= \frac{\alpha}{w_iw_j}\left[p_i^{(1)}p_j^{(1)} +\cdots+p_i^{(r)}p_j^{(r)}\right]\\
+  & &&= \frac{r\alpha\overline{p_ip_j}}{w_iw_j}\label{di_f_di_wi_wj}
+\end{alignat}
+
+This is harder to write in compact matrix notation.  We can write
+equation~\ref{di_f_di_wi_wj} as follows:
+
+\begin{equation}
+\alpha\mathcal{W}^{-1}\mathcal{P}^T\mathcal{P}\mathcal{W}^{-1}
+\end{equation}
+
+where~$\mathcal{W}=\left(w_0,\ldots w_n\right)$ is a diagonal matrix
+of weights and~$\mathcal{P}_{[n+1\times r]}$ is a (rectangular) matrix
+with~$\mathcal{P}_{ij}=p_i^{(j)}$.
+
+Combining equation~\ref{di_f_di_wi_wj} with
+equation~\ref{di_f_di_wi_wi} we see that the matrix of second
+derivatives is:
+
+\begin{alignat}{2}
+&  [WW]_{ij} &&=\diag\left(\frac{2\alpha P_0}{w_0^2} - \frac{r\alpha_0}{w_0^2},\ldots,
+\frac{2\alpha P_n}{w_n^2} - \frac{r\alpha_n}{w_n^2}\right) + \mathcal{W}^{-1}\mathcal{P}^T\mathcal{P}\mathcal{W}^{-1}\\
+& &&=   \diag\left(\frac{2\alpha P_0}{w_0^2},\ldots,\frac{2\alpha P_n}{w_n^2}\right)-
+\diag\left(\frac{r\alpha_0}{w_0^2},\ldots,\frac{r\alpha_n}{w_n^2}\right)+ \mathcal{W}^{-1}\mathcal{P}^T\mathcal{P}\mathcal{W}^{-1}\\
+& &&=   \mathcal{W}^{-1}\left(2\alpha\diag\left(P_0,\ldots,P_n\right)-r
+\diag\left(\alpha_0,\ldots,\alpha_n\right)+ \mathcal{P}^T\mathcal{P}\right)\mathcal{W}^{-1}\\
+& &&=   r\mathcal{W}^{-1}\left(2\alpha\diag\left(\overline{p_0},\ldots,\overline{p_n}\right)-\diag\left(\alpha_0,\ldots,\alpha_n\right)+ \frac{\alpha}{r}\mathcal{P}^T\mathcal{P}\right)\mathcal{W}^{-1}\\
+\end{alignat}
+
+Now we have done $\frac{\partial^2f}{\partial\alpha_iw_j}$, just as a
+check we are going to do $\frac{\partial^2f}{\partial w_j\alpha_i}$.
+That is, just checking that differentiationg WRT $w$ then $\alpha$ is
+the same as differentiating WRT $\alpha$ then $w$:
+
+\begin{alignat}{2}
+& -\frac{\partial^2\log f}{\partial w_j\partial\alpha_i}&&=
+ \frac{\partial}{\partial w_j}\left[ -r\psi(\alpha)+r\psi(\alpha_i)+r\log w_i-\log Q_i +\log\mathfrak{Q}\right]\\
+  & && = \frac{\partial}{\partial w_j}\left[r\log w_i+\log\mathfrak{Q}\right]\\
+  & && = \frac{\partial}{\partial w_j}\left[r\log
+   w_i+\log\mathfrak{q}^{(1)} 
+   +\cdots+ 
+      \log\mathfrak{q}^{(r)} 
+   \right]\\
+ & &&=
+\delta_{ij} \frac{r}{w_i}  +
+ \frac{1}{\mathfrak{q}^{(1)}}\cdot\frac{-q_j^{(1)}}{w_j^2}
+ +\cdots+
+ \frac{1}{\mathfrak{q}^{(r)}}\cdot\frac{-q_j^{(r)}}{w_j^2}\\
+ & &&=
+\delta_{ij} \frac{r}{w_i} -
+\frac{1}{w_j}\left(p_j^{(1)}+\cdots+ p_j^{(r)}\right) \\
+ & &&=\frac{r}{w_j}(\delta_{ij}-\overline{p_j})\\
+  \end{alignat}
+
+Therefore 
+
+\begin{equation}\label{WA}
+  -\frac{\partial^2\log f}{\partial w_i\partial\alpha_j} =\frac{r\delta_{ij}-P_i}{w_i}
+  \end{equation}
+[note swapping of $i$ and $j$], in agreement with
+equation~\ref{di2_f_di_w_di_alpha}.
+
+
+
+So now we can work out the Hessian matrix of $-\log f$, which we hope to be positive-definite.  
+
+
+\begin{equation}
+  H_{[2(n+1)\times 2(n+1)]} = \left(\begin{array}{cc} AA & AW\\ WA &
+    WW
+    \end{array}
+  \right)
+  \end{equation}
+
+where~$AA_{[n+1\times n+1]}$ is the matrix of $\alpha$ derivatives
+with~$[AA]_{ij} = -\frac{\partial^2\log
+  f}{\partial\alpha_i\partial\alpha_j}$, $WW_{[n+1\times n+1]}$ is the
+matrix of $w$ derivatives with~$[WW]_{ij}= -\frac{\partial^2\log
+  f}{\partial w_i\partial w_j}$, and~$A_{[n+1\times n+1]}$ is the
+matrix of mixed derivatives
+with~$[AW]_{ij}=[WA]_{ji}=-\frac{\partial^2\log
+  f}{\partial\alpha_i\partial w_j}$.
+
+Note the the Hessian is $n+1$-by-$n+1$.
+
+Note that this matrix will have a single zero eigenvalue so is
+positive-semidefinite.  The single zero eigenvalue is
+because~$f\left(\mathbf{Q};\mathbf{\alpha},\mathbf{w}\right) =
+f\left(\mathbf{Q};\mathbf{\alpha},k\mathbf{w}\right)$ for any~$k>0$.
+
+Recap: $AA$ is from equation~\ref{AA}; $AW$ from equation~\ref{AW}
+(or~\ref{WA}) and $WW$ is from equation
+
+
+
+
+
+\section{Moments}
+
+Use new notation here.
+
+
+\begin{alignat}{2}
+&  f_Q\left(\mathbf{q}\right) &&= \left(
+  \frac{\Gamma\left(\sum\alpha_i\right)
+  }{
+    \prod w_i^{\alpha_i}\Gamma\left(\alpha_i\right)
+  }
+  \right)  \cdot
+  \frac{\prod q_i^{\alpha_i-1}
+  }{
+    \left(\mathfrak{q}\right)^{\sum\alpha_i}
+  }\\
+  & && = \frac{1}{B\left(\ba,\bw\right)}
+  \frac{\prod q_i^{\alpha_i-1}
+  }{
+    \left(\mathfrak{q}\right)^{\sum\alpha_i}
+  }
+  \end{alignat}
+
+
+where~$B(\ba,\bw) = \int\frac{\prod q_i^{\alpha_i-1}
+  }{
+    \mathfrak{q}^\alpha
+  }d\Delta = \frac{
+    \prod w_i^{\alpha_i}\Gamma\left(\alpha_i\right)
+  }{
+  \Gamma\left(\alpha\right)
+  }$ is the normalization constant.
+
+
+
+Expectations are messy:
+
+\begin{alignat}{2}
+&  E \prod_i q_i^{m_i} && =  \int\prod_i{q_i^{m_i}}\cdot\frac{1}{B(\alpha,w)}\cdot\frac{\prod q_i^{\alpha_i-1}}{\mathfrak{q}^\alpha}\,d\Delta\\
+    & && = \frac{1}{B(\alpha,w)}\int\frac{\prod_i q_i^{\alpha_i+m_i-1}}{\mathfrak{q}^{\alpha+m-m}}\,d\Delta\\
+    & && = \frac{1}{B(\alpha,w)}\int\mathfrak{q}^m\frac{\prod_i q_i^{\alpha_i+m_i-1}}{\mathfrak{q}^{\alpha+m-m}}\,d\Delta
+\end{alignat}
+
+messy unless $\sum m_i=0$.  The way forward is to consider log contrasts:
+
+\[\phi=\sum_i c_i\log q_i\]
+
+where we demand that~$\sum_ic_i=0$.
+
+Then the moment generating function of~$\phi$ is easy:
+
+\begin{alignat}{2}
+&  M(t) = Ee^{t\phi}= && =  \int\prod_i{q_i^{tc_i}}\cdot\frac{1}{B(\alpha,w)}\cdot\frac{\prod q_i^{\alpha_i-1}}{\mathfrak{q}^\alpha}\,d\Delta\\
+    & && = \frac{1}{B(\ba,\bw)}\int\frac{\prod_i q_i^{\alpha_i+tc_i-1}}{\mathfrak{q}^{\alpha+tc_i}}\,d\Delta\\
+    & && = \frac{1}{B(\ba,\bw)}\int\frac{\prod_i q_i^{\alpha_i+tc_i}}{\mathfrak{q}^{\alpha}}\,d\Delta\\
+      & && = \frac{B(\ba+t\bc,\bw)}{B(\ba,\bw)}\\
+      & && = \prod w_i^{tc_i}\frac{\Gamma(\alpha_i+tc_i)}{\Gamma(\alpha_i)}
+\end{alignat}
+
+this is described on p343 of Kendall and Stuart.
+
+So we can work out the mean and variance of~$\phi$ using the Stirling
+series~$\ln\Gamma(z)=\left(z-\frac{1}{2}\right)\ln z-z+\frac{1}{2}\ln
+2\pi$
+
+So we get, on the assumption that we neglect terms of order
+$a_j^{-2}$:
+\begin{alignat}{2}
+&  \mathbbm{E}\phi =&& \bc\cdot\ln\ba - \frac{1}{2}\bc\cdot\ba^{-1} + \bc\cdot\ln\bw\\
+& \mathbbm{V}\phi =&& \sum\frac{c_i^2}{\alpha_i}
+  \end{alignat}
+
+
+so, to this level of approximation, the log contrasts have the same
+variance as the plain Dirichlet but with a shifted mean.
+
+Actually this shows that the log contrasts have {\em exactly} the same
+variance as the Dirichlet [because w only occurs with a linear term of
+  t]
+
+
+
+
+
+
+
+\section{Conclusions}
+
+
+
+\bibliography{elliptic}
+\end{document}
